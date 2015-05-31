@@ -1,4 +1,4 @@
-package com.kklee.utilities.Logger;
+package com.kklee.utilities;
 
 import android.app.Activity;
 import android.app.Dialog;
