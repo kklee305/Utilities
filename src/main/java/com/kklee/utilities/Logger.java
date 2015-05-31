@@ -40,8 +40,8 @@ public class Logger {
     }
 
     public static void e(String message, Exception e, Objects... objects) {
-        Log.e(getCallingInfo(), format(message, objects) + ": " + e.getMessage());
-        logToFile("E/", message, objects);
+        Log.e(getCallingInfo(), format(message, objects) + " | Exception: " + e.getMessage());
+        logToFile("E/", message + " | Exception: " + e.getMessage(), objects);
     }
 
     public static void w(String message, Objects... objects) {
