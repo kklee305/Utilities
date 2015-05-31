@@ -1,8 +1,13 @@
 package com.kklee.utilities.Logger;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.Objects;
@@ -129,6 +134,28 @@ public class Logger {
             instance = new Logger();
         }
         return instance;
+    }
+
+    public static void showDialog(final Activity activity) {
+        if (activity == null) return;
+
+        SharedPreferences pref = activity.getSharedPreferences(LOGGER_SHARED_PREF, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = pref.edit();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, 2);
+        builder.setTitle("Log")
+                .setMessage(pref.getString(Logger.LOGGER_SHARED_PREF, ""))
+                .setNeutralButton("CLear", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        editor.putString(LOGGER_SHARED_PREF, "");
+                        editor.apply();
+                    }
+                });
+        Dialog dialog = builder.create();
+        dialog.show();
+        TextView tv = (TextView) dialog.findViewById(android.R.id.message);
+        tv.setTextSize(8);
     }
 
 }
