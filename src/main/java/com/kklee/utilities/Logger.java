@@ -31,23 +31,23 @@ public class Logger {
 
     public static void wtf(String message, Objects... objects) {
         Log.wtf(getCallingInfo(), format(message, objects));
-        logToFile("WTF!?: ", message, objects);
-    }
-
-    public static void e(String message, Throwable tr, Objects... objects) {
-        Log.e(getCallingInfo(), format(message, objects) + ": " + Log.getStackTraceString(tr));
-        logToFile("Error: ", message, objects);
+        logToFile("WTF/", message, objects);
     }
 
     public static void e(String message, Objects... objects) {
         Log.e(getCallingInfo(), format(message, objects));
-        logToFile("Error: ", message, objects);
+        logToFile("E/", message, objects);
+    }
+
+    public static void e(String message, Exception e, Objects... objects) {
+        Log.e(getCallingInfo(), format(message, objects) + ": " + e.getMessage());
+        logToFile("E/", message, objects);
     }
 
     public static void w(String message, Objects... objects) {
         if (!IS_LOGGING) return;
         Log.w(getCallingInfo(), format(message, objects));
-        logToFile("Warning: ", message, objects);
+        logToFile("W/", message, objects);
     }
 
     public static void i(String message, Objects... objects) {
@@ -67,13 +67,13 @@ public class Logger {
 
     private static void logToFile(String tag, String message, Objects... objects) {
         if (context == null) return;
-        String toLog = getTimeStamp() + tag + getCallingInfo() + " | " + format(message, objects) + "\n";
+        String toLog = "[" + getTimeStamp() + "] " + tag + getCallingInfo() + "--> " + format(message, objects) + "\n";
         //TODO temp writes to shared pref FOR NOW. should write to file
         SharedPreferences pref = context.getSharedPreferences(LOGGER_SHARED_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         String oldLog = pref.getString(LOGGER_SHARED_PREF, "");
         if (oldLog.length() > 2000) {
-            oldLog = oldLog.substring((int) oldLog.length() / 2, oldLog.length());
+            oldLog = oldLog.substring(oldLog.length() / 2, oldLog.length());
         }
         String log = oldLog + toLog;
         editor.putString(LOGGER_SHARED_PREF, log);
