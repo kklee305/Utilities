@@ -1,4 +1,4 @@
-package com.kklee.utilities;
+package com.kklee.utilities.Logger;
 
 import android.content.Context;
 import android.content.SharedPreferences;
