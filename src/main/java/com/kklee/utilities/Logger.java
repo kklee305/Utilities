@@ -34,45 +34,45 @@ public class Logger {
         context = appContext;
     }
 
-    public static void wtf(String message, Objects... objects) {
+    public static void wtf(String message, Object... objects) {
         Log.wtf(getCallingInfo(), format(message, objects));
         logToFile("WTF/", message, objects);
     }
 
-    public static void e(String message, Objects... objects) {
+    public static void e(String message, Object... objects) {
         Log.e(getCallingInfo(), format(message, objects));
         logToFile("E/", message, objects);
     }
 
-    public static void e(String message, Exception e, Objects... objects) {
+    public static void e(String message, Exception e, Object... objects) {
         Log.e(getCallingInfo(), format(message, objects) + " | Exception: " + e.getMessage());
         logToFile("E/", message + " | Exception: " + e.getMessage(), objects);
     }
 
-    public static void w(String message, Objects... objects) {
+    public static void w(String message, Object... objects) {
         if (!IS_LOGGING) return;
         Log.w(getCallingInfo(), format(message, objects));
         logToFile("W/", message, objects);
     }
 
-    public static void i(String message, Objects... objects) {
+    public static void i(String message, Object... objects) {
         if (!IS_LOGGING) return;
         Log.i(getCallingInfo(), format(message, objects));
     }
 
-    public static void d(String message, Objects... objects) {
+    public static void d(String message, Object... objects) {
         if (!IS_LOGGING) return;
         Log.d(getCallingInfo(), format(message, objects));
     }
 
-    public static void v(String message, Objects... objects) {
+    public static void v(String message, Object... objects) {
         if (!IS_LOGGING) return;
         Log.v(getCallingInfo(), format(message, objects));
     }
 
-    private static void logToFile(String tag, String message, Objects... objects) {
+    private static void logToFile(String tag, String message, Object... objects) {
         if (context == null) return;
-        String toLog = "[" + getTimeStamp() + "] " + tag + getCallingInfo() + "--> " + format(message, objects) + "\n";
+        String toLog = "[" + getTimeStamp() + "] " + tag + getCallingInfo() + ":  " + format(message, objects) + "\n";
         //TODO temp writes to shared pref FOR NOW. should write to file
         SharedPreferences pref = context.getSharedPreferences(LOGGER_SHARED_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -89,7 +89,7 @@ public class Logger {
         return DateFormat.getDateTimeInstance().format(System.currentTimeMillis());
     }
 
-    private static String format(String message, Objects... objects) {
+    private static String format(String message, Object... objects) {
         String content;
         if (objects.length == 0) {
             content = message;
