@@ -94,7 +94,12 @@ public class Logger {
         if (objects.length == 0) {
             content = message;
         } else {
-            content = String.format(message, objects);
+            try {
+                content = String.format(message, objects);
+            }catch (java.util.UnknownFormatConversionException e) {
+                Logger.e("Bad formatting! Check syntax", e);
+                content = message;
+            }
         }
         return content;
     }
