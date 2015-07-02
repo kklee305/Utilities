@@ -142,7 +142,7 @@ public class Logger {
     }
 
     public static void showDialog(final Activity activity) {
-        if (activity == null) return;
+        if (activity == null || !IS_LOGGING) return;
 
         SharedPreferences pref = activity.getSharedPreferences(LOGGER_SHARED_PREF, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = pref.edit();
